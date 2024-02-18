@@ -1,19 +1,22 @@
 package dev.tomektomczyk.dataservice.data.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
 
+import java.util.List;
 
 @Document(collection = "todolist")
 @Data
 @AllArgsConstructor
-public class ToDoList {
+@Builder
+@NoArgsConstructor
+public class ToDoListEntity {
     @Id
-    @Field(name = "id")
     private String id;
-    @Field(name = "name")
     private String name;
+    private List<String> taskIds;
 }

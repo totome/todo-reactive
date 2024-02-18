@@ -1,9 +1,7 @@
 package dev.tomektomczyk.dataservice.ctrl;
 
-import dev.tomektomczyk.dataservice.data.entity.ToDoList;
-import dev.tomektomczyk.dataservice.data.service.ListService;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import dev.tomektomczyk.dataservice.ctrl.dto.ToDoList;
+import dev.tomektomczyk.dataservice.data.service.ToDoListService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,17 +18,17 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class ListController {
 
-    private final ListService listService;
+    private final ToDoListService toDoListService;
 
     @GetMapping
     public Flux<ToDoList> getAllLists() {
-        return listService.getAllLists()
+        return toDoListService.getAllLists()
                 .doOnNext(list -> log.info("Received list: {}", list));
     }
 
     @PostMapping
-    public Mono<ToDoList> saveList(@RequestBody ToDoList toDoList) {
-        log.info("Received list to save: {}", toDoList);
-        return listService.save(toDoList);
+    public Mono<ToDoList> saveList(@RequestBody Mono<ToDoList> toDoList) {
+        return toDoListService.save(toDoList)
+                .doOnNext(list -> log.info("Saved list: {}", list));
     }
 }

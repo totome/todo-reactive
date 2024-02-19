@@ -2,6 +2,7 @@ package dev.tomektomczyk.dataservice.mapper;
 
 import dev.tomektomczyk.dataservice.ctrl.dto.Task;
 import dev.tomektomczyk.dataservice.ctrl.dto.ToDoList;
+import dev.tomektomczyk.dataservice.ctrl.dto.ToDoListBasicInfo;
 import dev.tomektomczyk.dataservice.data.entity.ToDoListEntity;
 import org.springframework.stereotype.Component;
 
@@ -14,15 +15,11 @@ public class ToDoListMapper {
                 .build();
     }
 
-    public ToDoList toToDoListDtoWithIds(ToDoListEntity toDoListEntity) {
-        return ToDoList.builder()
+    public ToDoListBasicInfo toToDoListBasicInfoDto(ToDoListEntity toDoListEntity) {
+        return ToDoListBasicInfo.builder()
                 .id(toDoListEntity.getId())
                 .name(toDoListEntity.getName())
-                .tasks(toDoListEntity.getTaskIds().stream()
-                        .map(id->Task.builder()
-                                .id(id)
-                                .build())
-                        .toList())
+                .tasks(toDoListEntity.getTaskIds())
                 .build();
     }
 

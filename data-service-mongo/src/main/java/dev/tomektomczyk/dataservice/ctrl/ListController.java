@@ -1,6 +1,7 @@
 package dev.tomektomczyk.dataservice.ctrl;
 
 import dev.tomektomczyk.dataservice.ctrl.dto.ToDoList;
+import dev.tomektomczyk.dataservice.ctrl.dto.ToDoListBasicInfo;
 import dev.tomektomczyk.dataservice.data.service.ToDoListService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +28,7 @@ public class ListController {
     }
 
     @PostMapping
-    public Mono<ToDoList> saveList(@RequestBody Mono<ToDoList> toDoList) {
+    public Mono<ToDoListBasicInfo> saveList(@RequestBody Mono<ToDoList> toDoList) {
         return toDoListService.save(toDoList)
                 .doOnNext(list -> log.info("Saved list: {}", list));
     }

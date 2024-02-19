@@ -1,6 +1,7 @@
 package dev.tomektomczyk.dataservice.data.service;
 
 import dev.tomektomczyk.dataservice.ctrl.dto.ToDoList;
+import dev.tomektomczyk.dataservice.ctrl.dto.ToDoListBasicInfo;
 import dev.tomektomczyk.dataservice.ctrl.exception.EmptyTaskListException;
 import dev.tomektomczyk.dataservice.data.entity.TaskEntity;
 import dev.tomektomczyk.dataservice.data.entity.ToDoListEntity;
@@ -46,13 +47,13 @@ public class ToDoListService {
                         .withTasks(tasks));
     }
 
-    public Mono<ToDoList> save(Mono<ToDoList> toDoList) {
+    public Mono<ToDoListBasicInfo> save(Mono<ToDoList> toDoList) {
         return toDoList.handle(this::validateInput)
                 .cast(ToDoList.class)
                 .flatMap(this::saveTasks)
                 .map(toDoListMapper::toToDoListEntity)
                 .flatMap(listRepository::save)
-                .map(toDoListMapper::toToDoListDtoWithIds);
+                .map(toDoListMapper::toToDoListBasicInfoDto);
     }
 
     private void validateInput(ToDoList list, SynchronousSink<Object> sink) {

@@ -20,7 +20,7 @@ import org.testcontainers.containers.MongoDBContainer;
 @SpringBootTest
 @AutoConfigureWebTestClient
 @Testcontainers
-public class ToDoListServiceIT {
+class ToDoListServiceIntegrationTest {
 
     public static final String MONGO_IMAGE_NAME = "mongo:latest";
 
